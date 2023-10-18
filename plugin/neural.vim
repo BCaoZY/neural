@@ -35,11 +35,13 @@ command! -nargs=? Neural :call neural#Prompt(<q-args>)
 command! -nargs=0 NeuralStop :call neural#Stop()
 " Have Neural explain the visually selected lines.
 command! -range NeuralExplain :call neural#explain#SelectedLines()
+command! -range -nargs=? NeuralCus :call neural#cus#SelectedLines(<q-args>)
 
 " <Plug> mappings for commands
 nnoremap <silent> <Plug>(neural_prompt) :call neural#OpenPrompt()<Return>
 nnoremap <silent> <Plug>(neural_stop) :call neural#Stop()<Return>
 vnoremap <silent> <Plug>(neural_explain) :NeuralExplain<Return>
+vnoremap <silent> <Plug>(neural_cus) :NeuralCus<Return>
 
 " Set default keybinds for Neural unless we're told not to. We should almost
 " never define keybinds by default in a plugin, but we can add only a few to

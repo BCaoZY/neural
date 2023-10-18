@@ -20,6 +20,7 @@ let s:defaults = {
 \   'source': {
 \       'openai': {
 \           'api_key': '',
+\           'endpoint': 'https://api.chatanywhere.com.cn/v1/completions',
 \           'frequency_penalty': 0.1,
 \           'max_tokens': 1024,
 \           'model': 'gpt-3.5-turbo-instruct',
@@ -29,6 +30,7 @@ let s:defaults = {
 \       },
 \       'chatgpt': {
 \           'api_key': '',
+\           'endpoint': 'https://api.openai.com/v1/chat/completions',
 \           'frequency_penalty': 0.1,
 \           'max_tokens': 2048,
 \           'model': 'gpt-3.5-turbo',

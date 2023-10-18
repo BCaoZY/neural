@@ -7,7 +7,7 @@ import urllib.error
 import urllib.request
 from typing import Any, Dict
 
-API_ENDPOINT = 'https://api.openai.com/v1/completions'
+#API_ENDPOINT = 'https://api.openai.com/v1/completions'
 
 OPENAI_DATA_HEADER = 'data: '
 OPENAI_DONE = '[DONE]'
@@ -20,6 +20,7 @@ class Config:
     def __init__(
         self,
         api_key: str,
+        endpoint: str,
         model: str,
         temperature: float,
         top_p: float,
@@ -28,6 +29,7 @@ class Config:
         frequency_penalty: float,
     ):
         self.api_key = api_key
+        self.endpoint = endpoint
         self.model = model
         self.temperature = temperature
         self.top_p = top_p
@@ -52,7 +54,7 @@ def get_openai_completion(config: Config, prompt: str) -> None:
         "stream": True,
     }
     req = urllib.request.Request(
-        API_ENDPOINT,
+        config.endpoint,
         data=json.dumps(data).encode("utf-8"),
         headers=headers,
         method="POST",
@@ -90,6 +92,11 @@ def load_config(raw_config: Dict[str, Any]) -> Config:
     if not isinstance(api_key, str) or not api_key:  # type: ignore
         raise ValueError("openai.api_key is not defined")
 
+    endpoint = raw_config.get('endpoint')
+
+    if not isinstance(endpoint, str) or not endpoint:  # type: ignore
+        raise ValueError("openai.endpoint is not defined")
+
     model = raw_config.get('model')
 
     if not isinstance(model, str) or not model:
@@ -122,6 +129,7 @@ def load_config(raw_config: Dict[str, Any]) -> Config:
 
     return Config(
         api_key=api_key,
+        endpoint=endpoint,
         model=model,
         temperature=temperature,
         top_p=top_p,
